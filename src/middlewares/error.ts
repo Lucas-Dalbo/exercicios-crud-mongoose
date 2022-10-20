@@ -16,7 +16,7 @@ const errorHandler: ErrorRequestHandler = (
   // aqui vamos fazer o cast da mensagem de erro para uma chave do Enum ErrorTypes
   // com o keyof typeof - traduzindo seria algo como 'chaves do tipo de'
   // dizemos que o `err.message` é alguma das chaves do ErrorTypes
-  const messageAsErrorType = err.message as keyof typeof ErrorTypes;
+  const messageAsErrorType = err.message as ErrorTypes;
 
   // vamos usar a mensagem para acessar um erro do nosso catálogo
   // se a mensagem não for uma chave do nosso catálogo "mappedError" vai retornar undefined e não entrar no "if"
