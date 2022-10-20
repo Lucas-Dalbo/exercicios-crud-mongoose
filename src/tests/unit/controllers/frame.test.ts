@@ -16,7 +16,7 @@ describe('Frame Controller', () => {
   // o mesmo acontece com o segundo parâmetro
   const res = {} as Response;
 
-  before(() => {
+  beforeEach(() => {
     sinon.stub(frameService, 'create').resolves(frameMock);
     sinon.stub(frameService, 'readOne').resolves(frameMock);
     sinon.stub(frameService, 'read').resolves(allFramesMock);
@@ -26,7 +26,7 @@ describe('Frame Controller', () => {
     res.json = sinon.stub().returns(res);
   });
 
-  after(() => {
+  afterEach(() => {
     sinon.restore()
   })
 
