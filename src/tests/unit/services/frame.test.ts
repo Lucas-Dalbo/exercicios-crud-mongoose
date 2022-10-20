@@ -39,7 +39,7 @@ describe('Frame Service', () => {
 			try {
 				await frameService.create({});
 			} catch (err) {
-				error = err
+				error = err;
 			}
 
 			expect(error).to.be.instanceOf(ZodError);
@@ -59,7 +59,7 @@ describe('Frame Service', () => {
         // a mesma chamada que o teste acima aqui vai gerar o erro por causa do nosso sinon.stub(...).onCall(1)
 				await frameService.readOne(frameMockWithId._id);
 			} catch (err:any) {
-				error = err
+				error = err;
 			}
 
 			expect(error, 'error should be defined').not.to.be.undefined;
@@ -85,7 +85,7 @@ describe('Frame Service', () => {
 			try {
 				await frameService.readOne(frameMockWithId._id);
 			} catch (err:any) {
-				error = err
+				error = err;
 			}
 			expect(error, 'error should be defined').not.to.be.undefined;
 			expect(error.message).to.be.deep.equal(ErrorTypes.EntityNotFound);
