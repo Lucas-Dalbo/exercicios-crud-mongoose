@@ -1,3 +1,4 @@
+// configuração para test:coverage
 module.exports = {
   "extends": "@istanbuljs/nyc-config-typescript",
   "include": [
