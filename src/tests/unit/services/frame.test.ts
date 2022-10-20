@@ -13,6 +13,9 @@ describe('Frame Service', () => {
 	before(() => {
 		sinon.stub(frameModel, 'create').resolves(frameMockWithId);
 		sinon.stub(frameModel, 'read').resolves(allFramesMock);
+		sinon.stub(frameModel, 'destroy')
+			.onCall(0).resolves(frameMockWithId)
+			.onCall(1).resolves(null);
 		sinon.stub(frameModel, 'readOne')
       // na chamada de index 0 `frameModel.readOne` vai responder um fakeFrame
 			.onCall(0).resolves(frameMockWithId) 
@@ -68,6 +71,24 @@ describe('Frame Service', () => {
 		it('Success', async () => {
 			const frames = await frameService.read();
 			expect(frames).to.be.deep.equal(allFramesMock);
+		});
+	});
+
+	describe('Destroy Frames', () => {
+		it('Success', async () => {
+			const frameDeleted = await frameService.destroy(frameMockWithId._id);
+			expect(frameDeleted).to.be.deep.equal(frameMockWithId);
+		});
+
+		it('Failure', async () => {
+      let error;
+			try {
+				await frameService.readOne(frameMockWithId._id);
+			} catch (err:any) {
+				error = err
+			}
+			expect(error, 'error should be defined').not.to.be.undefined;
+			expect(error.message).to.be.deep.equal(ErrorTypes.EntityNotFound);
 		});
 	});
 });
