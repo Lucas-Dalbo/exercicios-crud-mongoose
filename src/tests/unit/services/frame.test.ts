@@ -4,7 +4,7 @@ import { ZodError } from 'zod';
 import { ErrorTypes } from '../../../errors/catalog';
 import FrameModel from '../../../models/Frame';
 import FrameService from '../../../services/Frame';
-import { frameMock, frameMockWithId } from '../../mocks/frameMock';
+import { allFramesMock, frameMock, frameMockWithId } from '../../mocks/frameMock';
 
 describe('Frame Service', () => {
 	const frameModel = new FrameModel();
@@ -12,6 +12,7 @@ describe('Frame Service', () => {
 
 	before(() => {
 		sinon.stub(frameModel, 'create').resolves(frameMockWithId);
+		sinon.stub(frameModel, 'read').resolves(allFramesMock);
 		sinon.stub(frameModel, 'readOne')
       // na chamada de index 0 `frameModel.readOne` vai responder um fakeFrame
 			.onCall(0).resolves(frameMockWithId) 
@@ -60,6 +61,13 @@ describe('Frame Service', () => {
 
 			expect(error, 'error should be defined').not.to.be.undefined;
 			expect(error.message).to.be.deep.equal(ErrorTypes.EntityNotFound);
+		});
+	});
+
+	describe('Read Frames', () => {
+		it('Success', async () => {
+			const frames = await frameService.read();
+			expect(frames).to.be.deep.equal(allFramesMock);
 		});
 	});
 });
